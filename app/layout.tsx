@@ -2,6 +2,7 @@ import { NotesProvider } from "@/contexts/NotesContext";
 import "./globals.css";
 import type { Metadata } from "next";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+import Header from "@/components/Header";
 
 export const metadata: Metadata = {
   title: "MindVault",
@@ -17,7 +18,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body>
         <ThemeProvider>
-          <NotesProvider>{children}</NotesProvider>
+          <NotesProvider>
+            <Header />
+            {children}
+          </NotesProvider>
         </ThemeProvider>
       </body>
     </html>

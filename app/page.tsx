@@ -24,20 +24,16 @@ export default function HomePage() {
   }, [notes, searchQuery]);
 
   return (
+    
     <div className="container mx-auto py-6 px-4">
       <div className="flex justify-between items-center mb-6">
+       
         <h1 className="text-2xl font-bold">Your Notes</h1>
         <Link href={"/new"}>
           <Button size="sm" className="'rounded-full">
             <Plus className="h-4 w-4 mr-1" />
             New
           </Button>
-        </Link>
-        <Link
-          href="/settings"
-          className="text-sm text-muted-foreground hover:underline"
-        >
-          Settings
         </Link>
       </div>
 
@@ -58,6 +54,8 @@ export default function HomePage() {
           ))}
         </div>
       )}
+      
     </div>
+    
   );
 }
