@@ -1,10 +1,11 @@
-import { NotesProvider } from '@/contexts/NotesContext';
-import './globals.css';
-import type { Metadata } from 'next';
+import { NotesProvider } from "@/contexts/NotesContext";
+import "./globals.css";
+import type { Metadata } from "next";
+import { ThemeProvider } from "@/contexts/ThemeContext";
 
 export const metadata: Metadata = {
-  title: 'MindVault',
-  description: 'Your personal note-taking app',
+  title: "MindVault",
+  description: "Your personal note-taking app",
 };
 
 export default function RootLayout({
@@ -13,9 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <NotesProvider>{children}</NotesProvider>
+        <ThemeProvider>
+          <NotesProvider>{children}</NotesProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -4,10 +4,24 @@ import { NoteCard } from "@/components/NoteCard";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
+import { SearchBar } from "@/components/SearchBar";
+import { useState, useMemo } from "react";
 
 export default function HomePage() {
   const { notes } = useNotes();
-  const displayNotes = notes;
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredNotes = useMemo(() => {
+    if (!searchQuery.trim()) return notes;
+
+    const query = searchQuery.toLowerCase();
+
+    return notes.filter(
+      (note) =>
+        note.title.toLowerCase().includes(query) ||
+        note.content.toLowerCase().includes(query)
+    );
+  }, [notes, searchQuery]);
 
   return (
     <div className="container mx-auto py-6 px-4">
@@ -19,8 +33,19 @@ export default function HomePage() {
             New
           </Button>
         </Link>
+        <Link
+          href="/settings"
+          className="text-sm text-muted-foreground hover:underline"
+        >
+          Settings
+        </Link>
       </div>
-      {displayNotes.length === 0 ? (
+
+      <div className="mb-6">
+        <SearchBar onSearch={setSearchQuery} />
+      </div>
+
+      {filteredNotes.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-muted-foreground">
             No notes yet. Create your first one!
@@ -28,7 +53,7 @@ export default function HomePage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {displayNotes.map((note) => (
+          {filteredNotes.map((note) => (
             <NoteCard key={note.id} note={note} />
           ))}
         </div>
